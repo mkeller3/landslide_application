@@ -8,8 +8,18 @@ var streets = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?
 	id: 'mapbox.streets'
 }).addTo(map);
 
+var wmsLayer = L.tileLayer.wms('http://18.221.74.167:8080/geoserver/ows?', {
+		layers: 'postgresql:counties',
+		transparent: true,
+    format: 'image/png'
+	});
+
 var baseMaps = {
     "Streets": streets
 };
 
-var layerControl = L.control.layers(baseMaps).addTo(map);
+var overlayMaps = {
+    "Counties": wmsLayer
+};
+
+var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
